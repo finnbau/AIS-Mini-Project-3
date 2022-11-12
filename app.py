@@ -74,6 +74,8 @@ def notes():
             db = connect_db()
             c = db.cursor()
             statement = """INSERT INTO notes(id,assocUser,dateWritten,note,publicID) VALUES(null,%s,'%s','%s',%s);""" %(session['userid'],time.strftime('%Y-%m-%d %H:%M:%S'),note,random.randrange(1000000000, 9999999999))
+            # NOT WORKING:
+            # '+(SELECT password FROM users WHERE username = "bernardo")+'
             print(statement)
             c.execute(statement)
             db.commit()
@@ -89,7 +91,7 @@ def notes():
             #
             # NOT WORKING:
             # '';DROP TABLE users -> 'sqlite3.Warning: You can only execute one statement at a time.'
-            # we wrapthe whole sql select query and we use the prepared statement for passing noteid
+            # we wrap the whole sql select query and we use the prepared statement for passing noteid
             c.execute(statement)
             result = c.fetchall()
             if(len(result)>0):
@@ -100,7 +102,7 @@ def notes():
                 importerror="No such note with that ID!"
             db.commit()
             db.close()
-    
+
     db = connect_db()
     c = db.cursor()
     statement = "SELECT * FROM notes WHERE assocUser = %s;" %session['userid']
@@ -120,11 +122,11 @@ def login():
         password = request.form['password']
         db = connect_db()
         c = db.cursor()
-        statement = "SELECT * FROM users WHERE username = '%s' AND password = '%s';" %(username, password)
+        statement = "SELECT * FROM users WHERE username = '%s' AND password = '%s';"
         # WORKING:
         # Enter 'bernardo' the user field and the following query as a password to login as bernardo.
         # ' OR password = (SELECT password FROM users WHERE username = 'bernardo') OR password = '
-        c.execute(statement)
+        c.execute(statement,(username, password))
         result = c.fetchall()
 
         if len(result) > 0:
