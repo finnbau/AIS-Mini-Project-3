@@ -122,7 +122,7 @@ def login():
         password = request.form['password']
         db = connect_db()
         c = db.cursor()
-        statement = "SELECT * FROM users WHERE username = '%s' AND password = '%s';"
+        statement = "SELECT * FROM users WHERE username = %s AND password = %s;"
         # WORKING:
         # Enter 'bernardo' the user field and the following query as a password to login as bernardo.
         # ' OR password = (SELECT password FROM users WHERE username = 'bernardo') OR password = '
