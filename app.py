@@ -127,7 +127,7 @@ def login():
         # Enter 'bernardo' the user field and the following query as a password to login as bernardo.
         # ' OR password = (SELECT password FROM users WHERE username = 'bernardo') OR password = '
         # tuple = (username, password)
-        c.execute(statement,[username, password])
+        c.execute(statement,(username, password))
         result = c.fetchall()
 
         if len(result) > 0:
