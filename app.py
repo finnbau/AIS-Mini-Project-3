@@ -92,12 +92,12 @@ def notes():
             # NOT WORKING:
             # '';DROP TABLE users -> 'sqlite3.Warning: You can only execute one statement at a time.'
             # we wrap the whole sql select query and we use the prepared statement for passing noteid
-            c.execute(statement, noteid)
+            c.execute(statement, [noteid])
             result = c.fetchall()
             if(len(result)>0):
                 row = result[0]
                 statement = """INSERT INTO notes(id,assocUser,dateWritten,note,publicID) VALUES(null,?,?,?,?);"""
-                c.execute(statement,(session['userid'],row[2],row[3],row[4]))
+                c.execute(statement,[session['userid'],row[2],row[3],row[4]])
             else:
                 importerror="No such note with that ID!"
             db.commit()
