@@ -77,7 +77,7 @@ def notes():
             # NOT WORKING:
             # '+(SELECT password FROM users WHERE username = "bernardo")+'
             print(statement)
-            c.execute(statement, (session['userid'],time.strftime('%Y-%m-%d %H:%M:%S'),note,random.randrange(1000000000, 9999999999)))
+            c.execute(statement, [session['userid'],time.strftime('%Y-%m-%d %H:%M:%S'),note,random.randrange(1000000000, 9999999999)])
             db.commit()
             db.close()
         elif request.form['submit_button'] == 'import note':
