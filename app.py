@@ -107,7 +107,7 @@ def notes():
     c = db.cursor()
     statement = "SELECT * FROM notes WHERE assocUser = ?;"
     print(statement)
-    c.execute(statement, session['userid'])
+    c.execute(statement, [session['userid']])
     notes = c.fetchall()
     print(notes)
     
