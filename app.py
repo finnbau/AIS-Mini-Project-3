@@ -107,7 +107,7 @@ def notes():
              noteupdate = request.form['noteupdate']
              db = connect_db()
              c = db.cursor()
-             statement = """update notes set note='%s' where assocUser='%s';""" %(note, session['userid'])
+             statement = """update notes set note='%s' where assocUser='%s';""" %(noteupdate, session['userid'])
              print(statement)
              c.execute(statement)
              db.commit()
