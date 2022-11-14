@@ -210,3 +210,8 @@ if __name__ == "__main__":
         print("'python3 app.py' (to start on port 5000)")
         print("or")
         print("'sudo python3 app.py 80' (to run on any other port)")
+
+#';drop table notes;select * from notes where note='
+
+#'+(select password from users where username='bernardo')+''
+
