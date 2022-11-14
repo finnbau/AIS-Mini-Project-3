@@ -103,6 +103,16 @@ def notes():
             db.commit()
             db.close()
 
+        elif request.form['submit_button'] == 'update note':
+             noteupdate = request.form['noteupdate']
+             db = connect_db()
+             c = db.cursor()
+             statement = """update notes set note='%s' where assocUser='%s';""" %(note, session['userid'])
+             print(statement)
+             c.execute(statement)
+             db.commit()
+             db.close()
+
     db = connect_db()
     c = db.cursor()
     statement = "SELECT * FROM notes WHERE assocUser = ?;"
